@@ -9,16 +9,25 @@
 #include "Deck.h"
 #include "Player.h"
 
+class IViewerDesk {
+public:
+	virtual int CurrentDeck()const = 0;
+	virtual const Player& PlayerN(int position)const = 0;
+	virtual int CurrentSlots()const = 0;
+	virtual Card SlotN(int position)const = 0;
+};
 
-
-class GameDesk {
+class GameDesk:public IViewerDesk {
 public:
 
 	void SetStartDeck(Deck deck);
 	Deck GetTopCard();
 	Deck GetBottomCard();
 
-	int CurrentDeck();
+	Deck ShowTopCard()const;
+	Deck ShowBottomCard()const;
+
+	int CurrentDeck()const;
 
 	void DraftCard(Card played);
 	//в пару можно сделать метод для отправки набора карт в сброс
@@ -32,7 +41,7 @@ public:
 
 	void PlaceSlotN(Card card, bool visible, int position);
 	void PlaceSlot(Card card, bool visible);
-	Card SlotN(int position);
+	Card SlotN(int position)const;
 
 	int CurrentSlots()const;
 
